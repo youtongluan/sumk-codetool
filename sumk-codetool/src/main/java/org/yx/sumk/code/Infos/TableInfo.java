@@ -2,8 +2,8 @@ package org.yx.sumk.code.Infos;
 
 import org.yx.util.StringUtil;
 
-public class TableInfo{
-	
+public class TableInfo {
+
 	/*
 	 * 表名
 	 */
@@ -12,9 +12,9 @@ public class TableInfo{
 	 * 类名
 	 */
 	private String className;
-	
-	private String comment=null;
-	
+
+	private String comment = null;
+
 	private String packageName;
 
 	public String getPackageName() {
@@ -46,7 +46,7 @@ public class TableInfo{
 	}
 
 	public void setComment(String comment) {
-		this.comment = StringUtil.isEmpty(comment)?null:comment;
+		this.comment = StringUtil.isEmpty(comment) ? null : comment;
 	}
-	
+
 }

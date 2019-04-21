@@ -11,9 +11,6 @@ public class IdInfo {
 		return id;
 	}
 
-	/**
-	 * @param type
-	 */
 	public void parseType(Class<?> type) {
 		if (Number.class.isAssignableFrom(type)) {
 			this.idtype = type.getSimpleName();

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.yx.sumk.code.Infos.SimpleTableInfo;
 
-public class DaoMaker extends AbstractMaker{
+public class DaoMaker extends AbstractMaker {
 
 	public DaoMaker(List<Class<?>> clzs) {
 		super(clzs);
@@ -24,5 +24,5 @@ public class DaoMaker extends AbstractMaker{
 	protected String ftlName() {
 		return "dao.ftl";
 	}
-	
+
 }
