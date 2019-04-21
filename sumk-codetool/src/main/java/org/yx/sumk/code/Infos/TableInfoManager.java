@@ -11,26 +11,26 @@ public class TableInfoManager {
 		super();
 		this.tableInfoList = tableInfoList;
 	}
-	
-	public void println(){
+
+	public void println() {
 		System.out.println(this.tableInfoList);
 	}
-	
-	public List<String> getDbNames(){
-		List<String> dbs=new ArrayList<String>();
-		for(int i=0;i<tableInfoList.size();i++){
-			TableInfo t=tableInfoList.get(i);
+
+	public List<String> getDbNames() {
+		List<String> dbs = new ArrayList<String>();
+		for (int i = 0; i < tableInfoList.size(); i++) {
+			TableInfo t = tableInfoList.get(i);
 			dbs.add(t.getDbName());
 		}
 		return dbs;
 	}
-	
-	public Iterator<TableInfo> getIterator(){
+
+	public Iterator<TableInfo> getIterator() {
 		return this.tableInfoList.iterator();
 	}
 
 	public List<TableInfo> getTableInfoList() {
 		return tableInfoList;
 	}
-	
+
 }

@@ -10,9 +10,6 @@ public class SimpleTableInfo extends TableInfo {
 		return minclassname;
 	}
 
-	/**
-	 * @param name
-	 */
 	public void setJavaPackage(String name) {
 		this.setPackageName(name);
 	}

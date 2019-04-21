@@ -32,7 +32,6 @@ import org.yx.db.mapper.RawExecutor;
 import org.yx.exception.SumkException;
 import org.yx.log.Log;
 
-
 public class DBTableMaker {
 
 	public void exec() {
@@ -115,7 +114,7 @@ public class DBTableMaker {
 		String sql = sb.toString();
 		Log.get("sumk.db.generator").info("\n{}", sql);
 
-		if (AppInfo.get("s.db.sumk.1.url",null) == null) {
+		if (AppInfo.get("s.db.sumk.1.url", null) == null) {
 			Log.get("sumk.db.generator").info("没有配置数据库，不会自动写入数据库。自此sql生成结束");
 			return;
 		}
@@ -124,7 +123,7 @@ public class DBTableMaker {
 
 			boolean exist = list != null && list.size() > 0;
 			if (exist) {
-				Log.get("sumk.db.generator").info("{}已经存在了，不会再生成",pm.getTableName());
+				Log.get("sumk.db.generator").info("{}已经存在了，不会再生成", pm.getTableName());
 				return;
 			}
 			if (RawExecutor.execute(sql) == 1) {

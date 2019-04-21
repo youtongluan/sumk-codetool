@@ -39,18 +39,14 @@ public abstract class AbstractMaker extends BaseMaker {
 		this.clzs = clzs;
 	}
 
-	/**
+	/*
 	 * 存放生成文件的文件夹，前后不需要文件分隔符
-	 * 
-	 * @return
 	 */
 	protected abstract String outputPath();
 
-	/**
+	/*
 	 * 生成的文件名
 	 * 
-	 * @param tb
-	 * @return
 	 */
 	protected abstract String outputFileName(SimpleTableInfo tb);
 
@@ -58,23 +54,23 @@ public abstract class AbstractMaker extends BaseMaker {
 
 	@Override
 	public void exec() {
-		FileUtil.clearDir(new File(baseDir , outputPath()));// 清空文件
+		FileUtil.clearDir(new File(baseDir, outputPath()));// 清空文件
 		for (Class<?> clz : clzs) {
-			PojoMeta pm=PojoMetaHolder.getPojoMeta(clz);
-			if(pm==null){
-				Log.get(this.getClass()).error("{}没有使用@Table注解，或者{}不在sumk.ioc扫描的包路径下",clz.getName(),clz.getName());
+			PojoMeta pm = PojoMetaHolder.getPojoMeta(clz);
+			if (pm == null) {
+				Log.get(this.getClass()).error("{}没有使用@Table注解，或者{}不在sumk.ioc扫描的包路径下", clz.getName(), clz.getName());
 				continue;
 			}
 			SimpleTableInfo tb = new SimpleTableInfo();
 			tb.setClassName(clz.getSimpleName());// 获取类的名字
 			tb.setJavaPackage(clz.getPackage().getName());// 获取类所在的package
-			ColumnMeta[] ids=pm.getPrimaryIDs();
-//			if(ids==null || ids.length==0){
-//				Log.get(this.getClass()).error("{}没有使用设置主键，不能自动生成",clz.getName());
-//				continue;
-//			}
+			ColumnMeta[] ids = pm.getPrimaryIDs();
+			// if(ids==null || ids.length==0){
+			// Log.get(this.getClass()).error("{}没有使用设置主键，不能自动生成",clz.getName());
+			// continue;
+			// }
 			List<IdInfo> idInfos = new ArrayList<IdInfo>();
-			for (ColumnMeta cm:ids) {
+			for (ColumnMeta cm : ids) {
 				IdInfo idinfo = new IdInfo();
 				idinfo.setId(cm.getFieldName());
 				idinfo.parseType(cm.field.getType());
@@ -115,7 +111,7 @@ public abstract class AbstractMaker extends BaseMaker {
 
 		root.put("classname", tb.getMinclassname());
 		root.put("module", tb.getPackageName().substring(0, tb.getPackageName().lastIndexOf(".")));
-		Path path=Paths.get(baseDir,this.outputPath(),this.outputFileName(tb));
+		Path path = Paths.get(baseDir, this.outputPath(), this.outputFileName(tb));
 		this.outPut(ftlName(), path.toFile(), root);
 	}
 
