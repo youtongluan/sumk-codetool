@@ -15,9 +15,10 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public abstract class BaseMaker {
+	public static final String OUTPUT="sumk.code.output";
 	protected Configuration cfg;
 	protected File destDir;
-	protected final static String baseDir = AppInfo.get("output");
+	protected static final String baseDir = AppInfo.get(OUTPUT);
 
 	public BaseMaker() {
 		this.cfg = ConfigHolder.getConfiguration();

@@ -18,39 +18,32 @@ import org.yx.db.sql.Update;
  */
 public abstract class AbstractDemoUserDao extends AbstractCachable {
 	
-	/** 增加  **/
 	public int insert(DemoUser demoUser){
 		return DB.insert(demoUser).execute();
 	}
 	
-	/** 更新整条记录 **/
 	public int updateFull(DemoUser demoUser){
 		return DB.update(demoUser).fullUpdate(true).execute();
 	}
 	
-	/** 删除 **/
 	public int delete(DemoUser demoUser){
 		return DB.delete(demoUser).execute();
 	}
 
-	/** 查询 **/
 	public List<DemoUser> list(DemoUser demoUser,int offset,int pageSize){
 		return DB.select(demoUser).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
 				.offset(offset)
 				.limit(pageSize).queryList();
 	}
 	
-	/** 查询数量 **/
 	public long count(DemoUser demoUser){
 		return DB.select(demoUser).tableClass(DemoUser.class).count();
 	}
 	
-	/** 更新**/
 	public int updatePart(DemoUser demoUser){
 		return DB.update(demoUser).execute();
 	}
 	
-	/**demoUser、page都不能为null */
 	public CountedResult<DemoUser> listAndCount(DemoUser obj,Pagable page){
 		Select select = DB.select(obj).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
 				.offset(page.getBeginDATAIndex())
@@ -60,7 +53,6 @@ public abstract class AbstractDemoUserDao extends AbstractCachable {
 	}
 	
 
-	/** 加载 **/
 	public DemoUser queryById(long id){
 		return DB.select().tableClass(DemoUser.class).byPrimaryId(id).fromCache(this.isCacheEnable()).queryOne();
     }
@@ -81,16 +73,10 @@ public abstract class AbstractDemoUserDao extends AbstractCachable {
 		return select.queryList();
 	}
 	
-	/**
-	 * 直接从数据库查询，不保证返回值的顺序
-	 */
-	 public List<DemoUser> listByIdsFromDB(List<Long> ids){
+	public List<DemoUser> listByIdsFromDB(List<Long> ids){
 		return listByIds(ids,false);
 	}
     
-    /**
-	 * 不保证返回值的顺序
-	 */
 	public List<DemoUser> listByIds(List<Long> ids){
 		return listByIds(ids,this.isCacheEnable());
 	}

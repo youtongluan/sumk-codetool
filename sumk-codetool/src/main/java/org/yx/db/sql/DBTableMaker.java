@@ -129,7 +129,7 @@ public class DBTableMaker {
 			if (RawExecutor.execute(sql) == 1) {
 				Log.get("sumk.db.generator").info("create table {} success", pm.getTableName());
 			} else {
-				Log.get("sumk.db.generator").info("create table {} failed!!", pm.getTableName());
+				Log.get("sumk.db.generator").error("create table {} failed!!", pm.getTableName());
 			}
 		});
 

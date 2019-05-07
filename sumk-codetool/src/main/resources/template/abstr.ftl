@@ -20,39 +20,32 @@ import org.yx.db.sql.Update;
  */
 public abstract class Abstract${ClassName}Dao extends AbstractCachable {
 	
-	/** 增加  **/
 	public int insert(${ClassName} ${classname}){
 		return DB.insert(${classname}).execute();
 	}
 	
-	/** 更新整条记录 **/
 	public int updateFull(${ClassName} ${classname}){
 		return DB.update(${classname}).fullUpdate(true).execute();
 	}
 	
-	/** 删除 **/
 	public int delete(${ClassName} ${classname}){
 		return DB.delete(${classname}).execute();
 	}
 
-	/** 查询 **/
 	public List<${ClassName}> list(${ClassName} ${classname},int offset,int pageSize){
 		return DB.select(${classname}).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
 				.offset(offset)
 				.limit(pageSize).queryList();
 	}
 	
-	/** 查询数量 **/
 	public long count(${ClassName} ${classname}){
 		return DB.select(${classname}).tableClass(${ClassName}.class).count();
 	}
 	
-	/** 更新**/
 	public int updatePart(${ClassName} ${classname}){
 		return DB.update(${classname}).execute();
 	}
 	
-	/**demoUser、page都不能为null */
 	public CountedResult<${ClassName}> listAndCount(${ClassName} obj,Pagable page){
 		Select select = DB.select(obj).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
 				.offset(page.getBeginDATAIndex())
@@ -64,7 +57,6 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable {
 
 	<#-- 单主键才有的 --> 
 <#if id??>
-	/** 加载 **/
 	public ${ClassName} queryById(${rawidtype} ${id}){
 		return DB.select().tableClass(${ClassName}.class).byPrimaryId(${id}).fromCache(this.isCacheEnable()).queryOne();
     }
@@ -85,16 +77,10 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable {
 		return select.queryList();
 	}
 	
-	/**
-	 * 直接从数据库查询，不保证返回值的顺序
-	 */
-	 public List<${ClassName}> listByIdsFromDB(List<${idtype}> ${id}s){
+	public List<${ClassName}> listByIdsFromDB(List<${idtype}> ${id}s){
 		return listByIds(${id}s,false);
 	}
     
-    /**
-	 * 不保证返回值的顺序
-	 */
 	public List<${ClassName}> listByIds(List<${idtype}> ${id}s){
 		return listByIds(${id}s,this.isCacheEnable());
 	}

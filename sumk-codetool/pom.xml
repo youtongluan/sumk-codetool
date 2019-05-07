@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.youtongluan</groupId>
 	<artifactId>sumk-codetool</artifactId>
-	<version>1.0.0</version>
+	<version>1.1</version>
     <name>com.github.youtongluan:sumk-codetool</name>
 	<description>auto code generator for sumk</description>
 	<url>https://github.com/youtongluan/sumk-codetool</url>
@@ -30,6 +30,13 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
+	<developers>
+		<developer>
+			<name>youtongluan</name>
+			<email>3205207767@qq.com</email>
+			<url>https://github.com/youtongluan</url>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 		    <groupId>org.freemarker</groupId>
@@ -39,7 +46,7 @@
 		<dependency>
 			<groupId>com.github.youtongluan</groupId>
 			<artifactId>sumk-log</artifactId>
-			<version>2.3.0</version>
+			<version>2.3.2</version>
 			<exclusions>
 				<exclusion>
 					<groupId>redis.clients</groupId>
