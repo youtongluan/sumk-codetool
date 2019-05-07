@@ -12,7 +12,7 @@ import org.yx.annotation.Box;
 import org.yx.bean.IOC;
 import org.yx.db.DB;
 import org.yx.db.mapper.RawExecutor;
-import org.yx.util.JsonUtil;
+import org.yx.util.S;
 import org.yx.util.SeqUtil;
 
 // @Bean @Cache注解的对象，不一定要继承接口
@@ -52,7 +52,7 @@ public class MultiDaoTest {
 			m.setId1(u.getId1());
 			m.setId2(u.getId2());
 			Multikey u2=dao.list(m,0,10).get(0);
-			Assert.assertEquals(JsonUtil.toJson(u), JsonUtil.toJson(u2));
+			Assert.assertEquals(S.json.toJson(u), S.json.toJson(u2));
 		});
 		
 		//list
@@ -62,7 +62,7 @@ public class MultiDaoTest {
 		Assert.assertEquals(2, list.size());
 		list.forEach(u2->{
 			Multikey u=this.get(users, u2.getId1(),u2.getId2());
-			Assert.assertEquals(JsonUtil.toJson(u), JsonUtil.toJson(u2));
+			Assert.assertEquals(S.json.toJson(u), S.json.toJson(u2));
 		});
 		
 		Assert.assertEquals(2, dao.count(multi));
@@ -88,7 +88,7 @@ public class MultiDaoTest {
 		multi.setId2(users.get(0).getId2());
 		Assert.assertEquals(1,dao.updateFull(multi));
 		DB.commit();
-		Assert.assertEquals(JsonUtil.toJson(multi),JsonUtil.toJson(dao.list(multi,0,10).get(0)));
+		Assert.assertEquals(S.json.toJson(multi),S.json.toJson(dao.list(multi,0,10).get(0)));
 		
 		Assert.assertEquals(2,RawExecutor.count("select count(1) from multikey"));
 		
