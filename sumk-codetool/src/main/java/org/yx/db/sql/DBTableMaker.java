@@ -20,8 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import org.yx.common.ItemJoiner;
 import org.yx.common.SumkLogs;
@@ -47,9 +45,9 @@ public class DBTableMaker {
 		} catch (Exception e) {
 			Log.printStack(SumkLogs.SQL_ERROR, e);
 		}
-		Log.get("sumk.db.generator").info("表格生成结束");
+		Log.get("sumk.code.generator").info("表格生成结束");
 	}
-
+	
 	private void generate(PojoMeta pm) throws Exception {
 		if (pm.getTableName().contains(PojoMeta.WILDCHAR)) {
 			return;
@@ -81,7 +79,7 @@ public class DBTableMaker {
 			} else {
 				joiner.append(valid);
 			}
-			joiner.append(" COMMENT '").append(AppInfo.get("sumk.db.generator.softdelete.comment", comment))
+			joiner.append(" COMMENT '").append(AppInfo.get("sumk.code.generator.softdelete.comment", comment))
 					.append('\'');
 		}
 
@@ -112,72 +110,69 @@ public class DBTableMaker {
 			sb.append("COMMENT='").append(tableComment).append("'");
 		}
 		String sql = sb.toString();
-		Log.get("sumk.db.generator").info("\n{}", sql);
+		Log.get("sumk.code.generator").info("\n{}", sql);
 
 		if (AppInfo.get("s.db.sumk.1.url", null) == null) {
-			Log.get("sumk.db.generator").info("没有配置数据库，不会自动写入数据库。自此sql生成结束");
+			Log.get("sumk.code.generator").info("没有配置数据库，不会自动写入数据库。自此sql生成结束");
 			return;
 		}
 		DBExec.exec(ResultContainer.create("sumk"), ex -> {
-			List<Map<String, Object>> list = RawExecutor.list("show tables like ?", pm.getTableName());
-
-			boolean exist = list != null && list.size() > 0;
-			if (exist) {
-				Log.get("sumk.db.generator").info("{}已经存在了，不会再生成", pm.getTableName());
-				return;
-			}
-			if (RawExecutor.execute(sql) == 1) {
-				Log.get("sumk.db.generator").info("create table {} success", pm.getTableName());
-			} else {
-				Log.get("sumk.db.generator").error("create table {} failed!!", pm.getTableName());
-			}
+			createTable(sql, pm.getTableName());
 		});
 
 	}
+	
+	void createTable(String sql,String table){
+		try {
+			RawExecutor.execute(sql);
+		} catch (Exception e) {
+			Log.get("sumk.code.generator").warn("create table {} failed because : ", table,e.getMessage());
+		}
+	}
 
 	private String name(String tableName) {
-		String quote = AppInfo.get("sumk.db.generator.quote", "");
+		String quote = AppInfo.get("sumk.code.generator.quote", "");
 		return quote + tableName + quote;
 	}
 
 	private String dbType(Class<?> clz) {
 		if (clz == Boolean.class || clz == boolean.class) {
-			return AppInfo.get("sumk.db.generator.type.boolean", "BIT(1)");
+			return AppInfo.get("sumk.code.generator.type.boolean", "BIT(1)");
 		}
 		if (clz == Byte.class || clz == byte.class) {
-			return AppInfo.get("sumk.db.generator.type.byte", "TINYINT");
+			return AppInfo.get("sumk.code.generator.type.byte", "TINYINT");
 		}
 		if (clz == Short.class || clz == short.class) {
-			return AppInfo.get("sumk.db.generator.type.short", "SMALLINT");
+			return AppInfo.get("sumk.code.generator.type.short", "SMALLINT");
 		}
 		if (clz == Integer.class || clz == int.class) {
-			return AppInfo.get("sumk.db.generator.type.int", "INT");
+			return AppInfo.get("sumk.code.generator.type.int", "INT");
 		}
 		if (clz == Long.class || clz == long.class) {
-			return AppInfo.get("sumk.db.generator.type.long", "BIGINT");
+			return AppInfo.get("sumk.code.generator.type.long", "BIGINT");
 		}
 
 		if (clz == Float.class || clz == float.class) {
-			return AppInfo.get("sumk.db.generator.type.float", "DECIMAL(12,3)");
+			return AppInfo.get("sumk.code.generator.type.float", "DECIMAL(12,3)");
 		}
 		if (clz == Double.class || clz == double.class) {
-			return AppInfo.get("sumk.db.generator.type.double", "DECIMAL(20,5)");
+			return AppInfo.get("sumk.code.generator.type.double", "DECIMAL(20,5)");
 		}
 
 		if (clz == String.class) {
-			return AppInfo.get("sumk.db.generator.type.string", "VARCHAR(255)");
+			return AppInfo.get("sumk.code.generator.type.string", "VARCHAR(255)");
 		}
 		if (clz == java.util.Date.class || clz == Timestamp.class || clz == LocalDateTime.class) {
-			return AppInfo.get("sumk.db.generator.type.timestamp", "TIMESTAMP");
+			return AppInfo.get("sumk.code.generator.type.timestamp", "TIMESTAMP");
 		}
 		if (clz == java.sql.Date.class || clz == LocalDate.class) {
-			return AppInfo.get("sumk.db.generator.type.date", "DATE");
+			return AppInfo.get("sumk.code.generator.type.date", "DATE");
 		}
 		if (clz == java.sql.Time.class || clz == LocalTime.class) {
-			return AppInfo.get("sumk.db.generator.type.time", "TIME");
+			return AppInfo.get("sumk.code.generator.type.time", "TIME");
 		}
 		if (clz == byte[].class) {
-			return AppInfo.get("sumk.db.generator.type.bytearray", "MEDIUMBLOB");
+			return AppInfo.get("sumk.code.generator.type.bytearray", "MEDIUMBLOB");
 		}
 		throw new SumkException(2545123, clz.getName() + " is un supported");
 	}

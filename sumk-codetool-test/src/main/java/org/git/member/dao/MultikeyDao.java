@@ -6,9 +6,6 @@ import org.yx.db.dao.CountedResult;
 import org.yx.db.dao.Pagable;
 
 
-/*
- * 自动生成，不能修改。
- */
 public interface MultikeyDao {
 	
 	int insert(Multikey multikey);

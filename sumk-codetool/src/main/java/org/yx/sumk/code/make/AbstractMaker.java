@@ -88,7 +88,7 @@ public abstract class AbstractMaker extends BaseMaker {
 				this.output(tb);
 				Log.get(this.getClass()).info(tb.getClassName() + "已经生成了");
 			} catch (Exception e) {
-				Log.printStack(e);
+				Log.printStack("sumk.code",e);
 			}
 		}
 		Log.get(this.getClass()).info(this.getClass().getSimpleName() + "处理完了!");

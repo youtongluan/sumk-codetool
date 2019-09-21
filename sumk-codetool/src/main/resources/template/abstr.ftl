@@ -86,7 +86,7 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable {
 	}
 	
 	public List<${idtype}> listIds(${ClassName} ${classname},int offset,int pageSize){
-		List<DemoUser> list= DB.select(${classname})
+		List<${ClassName}> list= DB.select(${classname})
 			.selectColumns("${id}")
 			.offset(offset)
 			.limit(pageSize)

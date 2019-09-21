@@ -38,7 +38,7 @@ public class ConfigHolder {
 			cfg.setTemplateLoader(tl);
 			cfg.setDefaultEncoding("UTF-8");
 		} catch (Exception e) {
-			Log.printStack(e);
+			Log.printStack("sumk.code",e);
 		}
 	}
 }
