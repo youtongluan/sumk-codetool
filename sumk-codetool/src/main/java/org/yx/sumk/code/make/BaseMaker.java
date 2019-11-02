@@ -43,7 +43,7 @@ public abstract class BaseMaker {
 		out.flush();
 	}
 
-	public abstract void exec();
+	public abstract void exec(boolean needClear);
 
 	/*
 	 * 其实是拿到包的上一级.<br> 如clz=com.youtl.temp.model.house 就返回com.youtl.temp

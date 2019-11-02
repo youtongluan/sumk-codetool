@@ -14,15 +14,15 @@ import org.yx.sumk.code.make.DaoMaker;
 
 public class CodeTool {
 	// 从数据库生成dao,参数是pojo所在的包名
-	public static void generateDao(Class<?>... clzs) {
+	public static void generateDao(boolean deleteBeforGenerate,Class<?>... clzs) {
 		SumkServer.start("nosoa", "nohttp",StartConstants.NOSOA_ClIENT);
 		String output=AppInfo.get(BaseMaker.OUTPUT,null);
 		if(output==null){
 			SumkException.throwException("请在app.properties中设置"+BaseMaker.OUTPUT+"参数，这个是生成文件的存放目录。");
 		}
-		new AbstrDaoMaker(Arrays.asList(clzs)).exec();
-		new DaoImplMaker(Arrays.asList(clzs)).exec();
-		new DaoMaker(Arrays.asList(clzs)).exec();
+		new AbstrDaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
+		new DaoImplMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
+		new DaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 	}
 
 	public static void generateDBTable() {

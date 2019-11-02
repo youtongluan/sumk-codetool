@@ -12,14 +12,20 @@ public class IdInfo {
 	}
 
 	public void parseType(Class<?> type) {
+		this.idtype = type.getSimpleName();
 		if (Number.class.isAssignableFrom(type)) {
-			this.idtype = type.getSimpleName();
 			if (Integer.class == type) {
 				this.rowidtype = "int";
-			} else {
-				this.rowidtype = this.idtype.toLowerCase();
+				return;
 			}
+			this.rowidtype = this.idtype.toLowerCase();
+			return;
 		}
+		if(String.class==type){
+			this.rowidtype = "String";
+			return;
+		}
+		this.rowidtype = type.getName();
 	}
 
 	public void setId(String id) {

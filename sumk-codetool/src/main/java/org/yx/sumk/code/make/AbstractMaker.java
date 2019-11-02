@@ -53,8 +53,10 @@ public abstract class AbstractMaker extends BaseMaker {
 	protected abstract String ftlName();
 
 	@Override
-	public void exec() {
-		FileUtil.clearDir(new File(baseDir, outputPath()));// 清空文件
+	public void exec(boolean needClear) {
+		if(needClear){
+			FileUtil.clearDir(new File(baseDir, outputPath()));// 清空文件
+		}
 		for (Class<?> clz : clzs) {
 			PojoMeta pm = PojoMetaHolder.getPojoMeta(clz);
 			if (pm == null) {

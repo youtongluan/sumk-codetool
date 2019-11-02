@@ -94,8 +94,8 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable {
 		if(list==null || list.isEmpty()){
 			return Collections.emptyList();
 		}
-		List<Long> ids=new ArrayList<>(list.size());
-		list.forEach(u->ids.add(u.getId()));
+		List<${idtype}> ids=new ArrayList<>(list.size());
+		list.forEach(u->ids.add(u.${getid}()));
 		return ids;
 	}
     
