@@ -1,7 +1,7 @@
 package ${module}.dao.abstr;
 
 import java.util.List;
-import org.yx.db.AbstractCachable;
+import org.yx.db.dao.AbstractCachable;
 import org.yx.db.DB;
 import org.yx.db.sql.Select;
 import ${javaPackage}.${ClassName};
