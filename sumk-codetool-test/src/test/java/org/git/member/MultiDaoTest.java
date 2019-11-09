@@ -32,8 +32,7 @@ public class MultiDaoTest {
 	public void multi() throws SQLException {
 		RawExecutor.execute("delete from multikey");
 		List<Multikey> users=new ArrayList<>();
-//		MultikeyDao dao=IOC.get(MultikeyDao.class); //非缓存模式
-		MultikeyDao dao=IOC.cache(null,MultikeyDao.class); //缓存模式
+		MultikeyDao dao=IOC.get(MultikeyDao.class); //非缓存模式
 		
 		//写入
 		Multikey multi=null;

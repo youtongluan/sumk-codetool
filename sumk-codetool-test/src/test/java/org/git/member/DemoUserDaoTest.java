@@ -37,8 +37,7 @@ public class DemoUserDaoTest {
 	public void demoUserTest() throws SQLException {
 		RawExecutor.execute("delete from demo_user");
 		List<DemoUser> users=new ArrayList<>();
-//		DemoUserDao dao=IOC.get(DemoUserDao.class); //非缓存模式
-		DemoUserDao dao=IOC.cache(null,DemoUserDao.class); //缓存模式
+		DemoUserDao dao=IOC.get(DemoUserDao.class); //非缓存模式
 		
 		//写入
 		DemoUser demoUser=null;

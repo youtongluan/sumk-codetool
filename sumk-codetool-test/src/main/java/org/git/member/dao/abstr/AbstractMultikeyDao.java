@@ -7,12 +7,13 @@ import org.yx.db.sql.Select;
 import org.git.member.pojo.Multikey;
 import org.yx.db.dao.CountedResult;
 import org.yx.db.dao.Pagable;
+import org.git.member.dao.MultikeyDao;
 
 
 /*
  * 自动生成，不能修改。
  */
-public abstract class AbstractMultikeyDao extends AbstractCachable {
+public abstract class AbstractMultikeyDao extends AbstractCachable implements MultikeyDao{
 	
 	public int insert(Multikey multikey){
 		return DB.insert(multikey).execute();

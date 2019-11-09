@@ -7,6 +7,7 @@ import org.yx.db.sql.Select;
 import org.git.member.pojo.DemoUser;
 import org.yx.db.dao.CountedResult;
 import org.yx.db.dao.Pagable;
+import org.git.member.dao.DemoUserDao;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import org.yx.db.sql.Update;
 /*
  * 自动生成，不能修改。
  */
-public abstract class AbstractDemoUserDao extends AbstractCachable {
+public abstract class AbstractDemoUserDao extends AbstractCachable implements DemoUserDao{
 	
 	public int insert(DemoUser demoUser){
 		return DB.insert(demoUser).execute();

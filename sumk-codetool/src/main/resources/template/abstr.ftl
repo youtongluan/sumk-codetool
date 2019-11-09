@@ -7,6 +7,7 @@ import org.yx.db.sql.Select;
 import ${javaPackage}.${ClassName};
 import org.yx.db.dao.CountedResult;
 import org.yx.db.dao.Pagable;
+import ${module}.dao.${ClassName}Dao;
 
 <#if id??>
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import org.yx.db.sql.Update;
 /*
  * 自动生成，不能修改。
  */
-public abstract class Abstract${ClassName}Dao extends AbstractCachable {
+public abstract class Abstract${ClassName}Dao extends AbstractCachable implements ${ClassName}Dao{
 	
 	public int insert(${ClassName} ${classname}){
 		return DB.insert(${classname}).execute();
