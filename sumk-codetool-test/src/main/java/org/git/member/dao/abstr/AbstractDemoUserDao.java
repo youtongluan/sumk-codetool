@@ -6,7 +6,6 @@ import org.yx.db.DB;
 import org.yx.db.sql.Select;
 import org.git.member.pojo.DemoUser;
 import org.yx.db.dao.CountedResult;
-import org.yx.db.dao.Pagable;
 import org.git.member.dao.DemoUserDao;
 
 import java.util.ArrayList;
@@ -31,10 +30,10 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 		return DB.delete(demoUser).execute();
 	}
 
-	public List<DemoUser> list(DemoUser demoUser,int offset,int pageSize){
+	public List<DemoUser> list(DemoUser demoUser,int offset,int limit){
 		return DB.select(demoUser).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
 				.offset(offset)
-				.limit(pageSize).queryList();
+				.limit(limit).queryList();
 	}
 	
 	public long count(DemoUser demoUser){
@@ -45,10 +44,10 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 		return DB.update(demoUser).execute();
 	}
 	
-	public CountedResult<DemoUser> listAndCount(DemoUser obj,Pagable page){
+	public CountedResult<DemoUser> listAndCount(DemoUser obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
-				.offset(page.getBeginDATAIndex())
-				.limit(page.getPageSize());
+				.offset(offset)
+				.limit(limit);
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}
@@ -82,11 +81,11 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 		return listByIds(ids,this.isCacheEnable());
 	}
 	
-	public List<Long> listIds(DemoUser demoUser,int offset,int pageSize){
+	public List<Long> listIds(DemoUser demoUser,int offset,int limit){
 		List<DemoUser> list= DB.select(demoUser)
 			.selectColumns("id")
 			.offset(offset)
-			.limit(pageSize)
+			.limit(limit)
 			.queryList();
 		if(list==null || list.isEmpty()){
 			return Collections.emptyList();

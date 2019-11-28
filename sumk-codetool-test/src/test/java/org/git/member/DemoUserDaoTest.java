@@ -15,7 +15,6 @@ import org.yx.annotation.Box;
 import org.yx.bean.IOC;
 import org.yx.db.DB;
 import org.yx.db.dao.CountedResult;
-import org.yx.db.dao.Paged;
 import org.yx.db.mapper.RawExecutor;
 import org.yx.util.S;
 
@@ -66,7 +65,7 @@ public class DemoUserDaoTest {
 		
 		List<Long> ids=dao.listIds(demoUser,0,50);
 		Assert.assertEquals(2, dao.count(demoUser));
-		CountedResult<DemoUser> result=dao.listAndCount(demoUser, new Paged(50));
+		CountedResult<DemoUser> result=dao.listAndCount(demoUser, 0,50);
 		Assert.assertEquals(2, result.getCount());
 		result.getResult().forEach(u2->{
 			DemoUser u=this.getUser(users, u2.getId());

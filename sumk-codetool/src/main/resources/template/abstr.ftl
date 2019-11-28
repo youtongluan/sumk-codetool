@@ -6,7 +6,6 @@ import org.yx.db.DB;
 import org.yx.db.sql.Select;
 import ${javaPackage}.${ClassName};
 import org.yx.db.dao.CountedResult;
-import org.yx.db.dao.Pagable;
 import ${module}.dao.${ClassName}Dao;
 
 <#if id??>
@@ -33,10 +32,10 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 		return DB.delete(${classname}).execute();
 	}
 
-	public List<${ClassName}> list(${ClassName} ${classname},int offset,int pageSize){
+	public List<${ClassName}> list(${ClassName} ${classname},int offset,int limit){
 		return DB.select(${classname}).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
 				.offset(offset)
-				.limit(pageSize).queryList();
+				.limit(limit).queryList();
 	}
 	
 	public long count(${ClassName} ${classname}){
@@ -47,10 +46,10 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 		return DB.update(${classname}).execute();
 	}
 	
-	public CountedResult<${ClassName}> listAndCount(${ClassName} obj,Pagable page){
+	public CountedResult<${ClassName}> listAndCount(${ClassName} obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
-				.offset(page.getBeginDATAIndex())
-				.limit(page.getPageSize());
+				.offset(offset)
+				.limit(limit);
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}
@@ -86,11 +85,11 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 		return listByIds(${id}s,this.isCacheEnable());
 	}
 	
-	public List<${idtype}> listIds(${ClassName} ${classname},int offset,int pageSize){
+	public List<${idtype}> listIds(${ClassName} ${classname},int offset,int limit){
 		List<${ClassName}> list= DB.select(${classname})
 			.selectColumns("${id}")
 			.offset(offset)
-			.limit(pageSize)
+			.limit(limit)
 			.queryList();
 		if(list==null || list.isEmpty()){
 			return Collections.emptyList();

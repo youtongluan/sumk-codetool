@@ -6,7 +6,6 @@ import org.yx.db.DB;
 import org.yx.db.sql.Select;
 import org.git.member.pojo.Multikey;
 import org.yx.db.dao.CountedResult;
-import org.yx.db.dao.Pagable;
 import org.git.member.dao.MultikeyDao;
 
 
@@ -27,10 +26,10 @@ public abstract class AbstractMultikeyDao extends AbstractCachable implements Mu
 		return DB.delete(multikey).execute();
 	}
 
-	public List<Multikey> list(Multikey multikey,int offset,int pageSize){
+	public List<Multikey> list(Multikey multikey,int offset,int limit){
 		return DB.select(multikey).tableClass(Multikey.class).fromCache(this.isCacheEnable())
 				.offset(offset)
-				.limit(pageSize).queryList();
+				.limit(limit).queryList();
 	}
 	
 	public long count(Multikey multikey){
@@ -41,10 +40,10 @@ public abstract class AbstractMultikeyDao extends AbstractCachable implements Mu
 		return DB.update(multikey).execute();
 	}
 	
-	public CountedResult<Multikey> listAndCount(Multikey obj,Pagable page){
+	public CountedResult<Multikey> listAndCount(Multikey obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(Multikey.class).fromCache(this.isCacheEnable())
-				.offset(page.getBeginDATAIndex())
-				.limit(page.getPageSize());
+				.offset(offset)
+				.limit(limit);
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}
