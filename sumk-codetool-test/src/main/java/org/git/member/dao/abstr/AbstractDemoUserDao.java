@@ -107,6 +107,9 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 	
 	public int updatePartByIds(List<Long> ids,DemoUser oldStatus,DemoUser newStatus){
 		Update update=DB.update(newStatus);
+		if(oldStatus==null){
+			oldStatus=new DemoUser(); 
+		}
 		for(Long id:ids){
 			oldStatus.setId(id);
 			update.addWhere(oldStatus);

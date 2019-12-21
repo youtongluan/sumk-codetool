@@ -111,6 +111,9 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 	
 	public int updatePartByIds(List<${idtype}> ${id}s,${ClassName} oldStatus,${ClassName} newStatus){
 		Update update=DB.update(newStatus);
+		if(oldStatus==null){
+			oldStatus=new ${ClassName}(); 
+		}
 		for(${idtype} ${id}:${id}s){
 			oldStatus.${setid}(${id});
 			update.addWhere(oldStatus);

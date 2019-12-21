@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.yx.common.ItemJoiner;
 import org.yx.common.SumkLogs;
@@ -56,7 +58,9 @@ public class DBTableMaker {
 		sb.append("CREATE TABLE ").append(name(pm.getTableName())).append(" (\n\t");
 		ColumnMeta[] cms = pm.fieldMetas;
 		ItemJoiner joiner = ItemJoiner.create(",\n\t", null, null);
+		Set<String> columnNames=new HashSet<>();
 		for (ColumnMeta cm : cms) {
+			columnNames.add(cm.dbColumn);
 			joiner.item().append(name(cm.dbColumn)).append(' ').append(dbType(cm.field.getType()));
 			if (cm.isDBID() || cm.isRedisID()) {
 				joiner.append(" NOT NULL ");
@@ -67,7 +71,7 @@ public class DBTableMaker {
 				joiner.append(" COMMENT \'").append(cm.comment).append('\'');
 			}
 		}
-		if (pm.isSoftDelete()) {
+		if (pm.isSoftDelete() && !columnNames.contains(pm.softDelete.columnName)) {
 			Class<?> softType = pm.softDelete.columnType;
 			String valid = Boolean.class == softType ? "1" : String.valueOf(pm.softDelete.validValue);
 			String invalid = Boolean.class == softType ? "0" : String.valueOf(pm.softDelete.inValidValue);
