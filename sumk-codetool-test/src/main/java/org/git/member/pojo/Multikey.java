@@ -1,16 +1,16 @@
 package org.git.member.pojo;
 
 import org.yx.annotation.db.Column;
-import org.yx.annotation.db.ColumnType;
 import org.yx.annotation.db.Table;
+import org.yx.db.enums.ColumnType;
 
 @Table
 public class Multikey{
 	
-	@Column(columnType=ColumnType.ID_BOTH)
+	@Column(type=ColumnType.ID_BOTH)
 	private String id1;
 
-	@Column(columnType=ColumnType.ID_BOTH)
+	@Column(type=ColumnType.ID_BOTH)
 	private String id2;
 
 	private String name;

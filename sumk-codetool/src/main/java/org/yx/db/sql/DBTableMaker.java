@@ -24,10 +24,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.yx.common.ItemJoiner;
-import org.yx.common.SumkLogs;
 import org.yx.conf.AppInfo;
-import org.yx.db.exec.DBExec;
-import org.yx.db.exec.ResultContainer;
+import org.yx.db.DB;
+import org.yx.db.exec.Databases;
 import org.yx.db.mapper.RawExecutor;
 import org.yx.exception.SumkException;
 import org.yx.log.Log;
@@ -41,11 +40,11 @@ public class DBTableMaker {
 				try {
 					generate(pm);
 				} catch (Exception e) {
-					Log.printStack(SumkLogs.SQL_ERROR, e);
+					Log.get("sumk.codetool").error(e.getMessage(),e);
 				}
 			}
 		} catch (Exception e) {
-			Log.printStack(SumkLogs.SQL_ERROR, e);
+			Log.get("sumk.codetool").error(e.getMessage(),e);
 		}
 		Log.get("sumk.code.generator").info("表格生成结束");
 	}
@@ -120,8 +119,9 @@ public class DBTableMaker {
 			Log.get("sumk.code.generator").info("没有配置数据库，不会自动写入数据库。自此sql生成结束");
 			return;
 		}
-		DBExec.exec(ResultContainer.create("sumk"), ex -> {
+		DB.execute(Databases.any(), ds -> {
 			createTable(sql, pm.getTableName());
+			return null;
 		});
 
 	}

@@ -1,14 +1,14 @@
 package org.git.member.pojo;
 
 import org.yx.annotation.db.Column;
-import org.yx.annotation.db.ColumnType;
 import org.yx.annotation.db.Table;
+import org.yx.db.enums.ColumnType;
 
 @Table("demo_user")
-@org.yx.annotation.db.SoftDelete(value="enable",columnType=Integer.class)
+@org.yx.annotation.db.SoftDelete(value="enable",type=Integer.class)
 public class DemoUser{
 	
-	@Column(columnType=ColumnType.ID_BOTH)
+	@Column(type=ColumnType.ID_BOTH)
 	private Long id;
 
 	private String name;
