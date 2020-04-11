@@ -51,7 +51,7 @@ public class DemoUserDaoTest {
 		DB.commit();
 		users.forEach(u->{
 			DemoUser u2=dao.queryById(u.getId());
-			Assert.assertEquals(S.json.toJson(u), S.json.toJson(u2));
+			Assert.assertEquals(S.json().toJson(u), S.json().toJson(u2));
 		});
 		//list
 		demoUser=new DemoUser();
@@ -60,7 +60,7 @@ public class DemoUserDaoTest {
 		Assert.assertEquals(2, listByUsers.size());
 		listByUsers.forEach(u2->{
 			DemoUser u=this.getUser(users, u2.getId());
-			Assert.assertEquals(S.json.toJson(u), S.json.toJson(u2));
+			Assert.assertEquals(S.json().toJson(u), S.json().toJson(u2));
 		});
 		
 		List<Long> ids=dao.listIds(demoUser,0,50);
@@ -69,7 +69,7 @@ public class DemoUserDaoTest {
 		Assert.assertEquals(2, result.getCount());
 		result.getResult().forEach(u2->{
 			DemoUser u=this.getUser(users, u2.getId());
-			Assert.assertEquals(S.json.toJson(u), S.json.toJson(u2));
+			Assert.assertEquals(S.json().toJson(u), S.json().toJson(u2));
 		});
 		
 		Set<Long> idSet2=new HashSet<>(ids);
@@ -82,7 +82,7 @@ public class DemoUserDaoTest {
 		Assert.assertEquals(2, users2.size());
 		users.forEach(u->{
 			for(DemoUser u2:users2){
-				if(S.json.toJson(u).equals(S.json.toJson(u2))){
+				if(S.json().toJson(u).equals(S.json().toJson(u2))){
 					return;
 				}
 			}
@@ -125,7 +125,7 @@ public class DemoUserDaoTest {
 		demoUser.setId(users.get(0).getId());
 		Assert.assertEquals(1,dao.updateFull(demoUser));
 		DB.commit();
-		Assert.assertEquals(S.json.toJson(demoUser),S.json.toJson(dao.queryById(demoUser.getId())));
+		Assert.assertEquals(S.json().toJson(demoUser),S.json().toJson(dao.queryById(demoUser.getId())));
 		
 		Assert.assertEquals(2,RawExecutor.count("select count(1) from demo_user where enable=1"));
 		
