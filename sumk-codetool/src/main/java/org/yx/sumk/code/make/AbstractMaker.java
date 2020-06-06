@@ -66,7 +66,7 @@ public abstract class AbstractMaker extends BaseMaker {
 			SimpleTableInfo tb = new SimpleTableInfo();
 			tb.setClassName(clz.getSimpleName());// 获取类的名字
 			tb.setJavaPackage(clz.getPackage().getName());// 获取类所在的package
-			ColumnMeta[] ids = pm.getPrimaryIDs();
+			List<ColumnMeta> ids = pm.getPrimaryIDs();
 			// if(ids==null || ids.length==0){
 			// Log.get(this.getClass()).error("{}没有使用设置主键，不能自动生成",clz.getName());
 			// continue;
@@ -75,8 +75,8 @@ public abstract class AbstractMaker extends BaseMaker {
 			for (ColumnMeta cm : ids) {
 				IdInfo idinfo = new IdInfo();
 				idinfo.setId(cm.getFieldName());
-				idinfo.parseType(cm.field.getType());
-				String newStr = StringUtils.capFirst(cm.field.getName());
+				idinfo.parseType(cm.getField().getType());
+				String newStr = StringUtils.capFirst(cm.getField().getName());
 				idinfo.setSetid("set" + newStr);
 				idinfo.setGetid("get" + newStr);
 				idInfos.add(idinfo);

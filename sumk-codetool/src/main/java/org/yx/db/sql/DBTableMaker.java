@@ -19,9 +19,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.yx.common.ItemJoiner;
@@ -56,7 +56,7 @@ public class DBTableMaker {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("CREATE TABLE ").append(name(pm.getTableName())).append(" (\n\t");
-		ColumnMeta[] cms = pm.fieldMetas;
+		List<ColumnMeta> cms = pm.fieldMetas;
 		ItemJoiner joiner = ItemJoiner.create(",\n\t", null, null);
 		Set<String> columnNames=new HashSet<>();
 		for (ColumnMeta cm : cms) {
@@ -67,8 +67,9 @@ public class DBTableMaker {
 			} else {
 				joiner.append(" NULL DEFAULT NULL ");
 			}
-			if (cm.comment != null && cm.comment.length() > 0) {
-				joiner.append(" COMMENT \'").append(cm.comment).append('\'');
+			String comment=cm.getComment();
+			if (comment != null && comment.length() > 0) {
+				joiner.append(" COMMENT \'").append(comment).append('\'');
 			}
 		}
 		if (pm.isSoftDelete() && !columnNames.contains(pm.softDelete.columnName)) {
@@ -87,18 +88,18 @@ public class DBTableMaker {
 					.append('\'');
 		}
 
-		ColumnMeta[] keys = pm.getPrimaryIDs();
-		if (keys != null && keys.length > 0) {
+		List<ColumnMeta> keys = pm.getPrimaryIDs();
+		if (keys != null && keys.size() > 0) {
 			joiner.item().append("PRIMARY KEY (");
 			ItemJoiner keyJoiner = ItemJoiner.create(",", null, null);
-			Arrays.stream(keys).forEachOrdered(c -> {
+			keys.forEach(c -> {
 				keyJoiner.item().append(name(c.dbColumn));
 			});
 			joiner.append(keyJoiner.toCharSequence()).append(')');
 		}
 
-		ColumnMeta[] foreigner = pm.getRedisIDs();
-		if (foreigner != null && foreigner.length > 0 && !Arrays.equals(foreigner, keys)) {
+		List<ColumnMeta> foreigner = pm.getRedisIDs();
+		if (foreigner != null && foreigner.size() > 0 && !Objects.equals(foreigner, keys)) {
 			joiner.item().append("KEY ").append(pm.getTableName() + "_index1").append(" (");
 			ItemJoiner keyJoiner = ItemJoiner.create(",", null, null);
 			for (ColumnMeta c : foreigner) {
@@ -109,7 +110,7 @@ public class DBTableMaker {
 
 		sb.append(joiner.toCharSequence()).append("\n)");
 
-		String tableComment = pm.table.comment();
+		String tableComment = pm.getComment();
 		if (tableComment != null && tableComment.length() > 0) {
 			sb.append("COMMENT='").append(tableComment).append("'");
 		}

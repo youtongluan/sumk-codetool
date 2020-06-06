@@ -1,11 +1,13 @@
 package org.git.member.pojo;
 
 import org.yx.annotation.db.Column;
+import org.yx.annotation.db.SoftDelete;
 import org.yx.annotation.db.Table;
+import org.yx.annotation.doc.Comment;
 import org.yx.db.enums.ColumnType;
 
 @Table("demo_user")
-@org.yx.annotation.db.SoftDelete(value="enable",type=Integer.class)
+@SoftDelete(value="enable",type=Integer.class)
 public class DemoUser{
 	
 	@Column(type=ColumnType.ID_BOTH)
@@ -16,6 +18,7 @@ public class DemoUser{
 	private Integer age;
 
 	@Column(value="last_update")
+	@Comment("最后更新时间")
 	private java.util.Date lastUpdate;
 
 

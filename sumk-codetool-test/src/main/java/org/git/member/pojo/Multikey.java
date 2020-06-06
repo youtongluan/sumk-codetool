@@ -2,9 +2,11 @@ package org.git.member.pojo;
 
 import org.yx.annotation.db.Column;
 import org.yx.annotation.db.Table;
+import org.yx.annotation.doc.Comment;
 import org.yx.db.enums.ColumnType;
 
 @Table
+@Comment("多主键表")
 public class Multikey{
 	
 	@Column(type=ColumnType.ID_BOTH)

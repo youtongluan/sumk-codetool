@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.util.Map;
 
 import org.yx.conf.AppInfo;
+import org.yx.log.Log;
 import org.yx.sumk.code.util.FileUtil;
 
 import freemarker.template.Configuration;
@@ -24,6 +25,7 @@ public abstract class BaseMaker {
 		this.cfg = ConfigHolder.getConfiguration();
 		this.destDir = new File(baseDir);
 		FileUtil.checkDir(this.destDir);
+		Log.get("sumk.code").info("代码生成的路径：{}",this.destDir);
 	}
 
 	protected void outPut(String src, File dest, Map<String, Object> root) throws IOException, TemplateException {
