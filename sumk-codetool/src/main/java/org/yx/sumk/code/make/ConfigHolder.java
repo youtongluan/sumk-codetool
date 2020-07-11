@@ -25,7 +25,7 @@ public class ConfigHolder {
 			Log.get("sumk.config").error("模板" + name + "找不到");
 			System.exit(-1);
 		}
-		byte[] bs = StreamUtil.extractData(in, true);
+		byte[] bs = StreamUtil.readAllBytes(in, true);
 		tl.putTemplate(name, bs);
 	}
 
