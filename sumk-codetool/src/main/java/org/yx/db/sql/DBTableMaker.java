@@ -62,7 +62,7 @@ public class DBTableMaker {
 		for (ColumnMeta cm : cms) {
 			columnNames.add(cm.dbColumn);
 			joiner.item().append(name(cm.dbColumn)).append(' ').append(dbType(cm.field.getType()));
-			if (cm.isDBID() || cm.isRedisID()) {
+			if (cm.isDBID() || cm.isCacheID()) {
 				joiner.append(" NOT NULL ");
 			} else {
 				joiner.append(" NULL DEFAULT NULL ");
@@ -98,7 +98,7 @@ public class DBTableMaker {
 			joiner.append(keyJoiner.toCharSequence()).append(')');
 		}
 
-		List<ColumnMeta> foreigner = pm.getRedisIDs();
+		List<ColumnMeta> foreigner = pm.getCacheIDs();
 		if (foreigner != null && foreigner.size() > 0 && !Objects.equals(foreigner, keys)) {
 			joiner.item().append("KEY ").append(pm.getTableName() + "_index1").append(" (");
 			ItemJoiner keyJoiner = ItemJoiner.create(",", null, null);
