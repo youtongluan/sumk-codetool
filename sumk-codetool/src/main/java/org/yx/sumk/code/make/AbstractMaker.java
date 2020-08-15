@@ -66,7 +66,7 @@ public abstract class AbstractMaker extends BaseMaker {
 			SimpleTableInfo tb = new SimpleTableInfo();
 			tb.setClassName(clz.getSimpleName());// 获取类的名字
 			tb.setJavaPackage(clz.getPackage().getName());// 获取类所在的package
-			List<ColumnMeta> ids = pm.getPrimaryIDs();
+			List<ColumnMeta> ids = pm.getDatabaseIds();
 			// if(ids==null || ids.length==0){
 			// Log.get(this.getClass()).error("{}没有使用设置主键，不能自动生成",clz.getName());
 			// continue;

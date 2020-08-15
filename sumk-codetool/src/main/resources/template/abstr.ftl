@@ -58,7 +58,7 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 	<#-- 单主键才有的 --> 
 <#if id??>
 	public ${ClassName} queryById(${rawidtype} ${id}){
-		return DB.select().tableClass(${ClassName}.class).byPrimaryId(${id}).fromCache(this.isCacheEnable()).queryOne();
+		return DB.select().tableClass(${ClassName}.class).byDatabaseId(${id}).fromCache(this.isCacheEnable()).queryOne();
     }
     
     public int deleteById(${rawidtype} ${id}){

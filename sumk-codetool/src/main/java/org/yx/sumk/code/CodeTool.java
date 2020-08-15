@@ -18,7 +18,7 @@ public class CodeTool {
 		SumkServer.start("nosoa", "nohttp",StartConstants.NOSOA_ClIENT);
 		String output=AppInfo.get(BaseMaker.OUTPUT,null);
 		if(output==null){
-			SumkException.throwException("请在app.properties中设置"+BaseMaker.OUTPUT+"参数，这个是生成文件的存放目录。");
+			throw new SumkException(0,"请在app.properties中设置"+BaseMaker.OUTPUT+"参数，这个是生成文件的存放目录。");
 		}
 		new AbstrDaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 		new DaoImplMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
@@ -29,7 +29,7 @@ public class CodeTool {
 		SumkServer.start("nosoa", "nohttp",StartConstants.NOSOA_ClIENT);
 		String output=AppInfo.get(BaseMaker.OUTPUT,null);
 		if(output==null){
-			SumkException.throwException("请在app.properties中设置"+BaseMaker.OUTPUT+"参数，这个是生成文件的存放目录。");
+			throw new SumkException(0,"请在app.properties中设置"+BaseMaker.OUTPUT+"参数，这个是生成文件的存放目录。");
 		}
 		new AbstrDaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 	}

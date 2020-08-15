@@ -88,7 +88,7 @@ public class DBTableMaker {
 					.append('\'');
 		}
 
-		List<ColumnMeta> keys = pm.getPrimaryIDs();
+		List<ColumnMeta> keys = pm.getDatabaseIds();
 		if (keys != null && keys.size() > 0) {
 			joiner.item().append("PRIMARY KEY (");
 			ItemJoiner keyJoiner = ItemJoiner.create(",", null, null);

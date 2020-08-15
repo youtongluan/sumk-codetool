@@ -54,7 +54,7 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 	
 
 	public DemoUser queryById(long id){
-		return DB.select().tableClass(DemoUser.class).byPrimaryId(id).fromCache(this.isCacheEnable()).queryOne();
+		return DB.select().tableClass(DemoUser.class).byDatabaseId(id).fromCache(this.isCacheEnable()).queryOne();
     }
     
     public int deleteById(long id){
