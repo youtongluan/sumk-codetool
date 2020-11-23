@@ -34,8 +34,7 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 
 	public List<${ClassName}> list(${ClassName} ${classname},int offset,int limit){
 		return DB.select(${classname}).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit).queryList();
+				.offset(offset).limit(limit)<#if id??>.orderByDesc("${id}")</#if>.queryList();
 	}
 	
 	public long count(${ClassName} ${classname}){
@@ -48,8 +47,7 @@ public abstract class Abstract${ClassName}Dao extends AbstractCachable implement
 	
 	public CountedResult<${ClassName}> listAndCount(${ClassName} obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(${ClassName}.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit);
+				.offset(offset).limit(limit)<#if id??>.orderByDesc("${id}")</#if>;
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}

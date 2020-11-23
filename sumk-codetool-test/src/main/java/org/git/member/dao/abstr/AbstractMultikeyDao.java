@@ -28,8 +28,7 @@ public abstract class AbstractMultikeyDao extends AbstractCachable implements Mu
 
 	public List<Multikey> list(Multikey multikey,int offset,int limit){
 		return DB.select(multikey).tableClass(Multikey.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit).queryList();
+				.offset(offset).limit(limit).queryList();
 	}
 	
 	public long count(Multikey multikey){
@@ -42,8 +41,7 @@ public abstract class AbstractMultikeyDao extends AbstractCachable implements Mu
 	
 	public CountedResult<Multikey> listAndCount(Multikey obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(Multikey.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit);
+				.offset(offset).limit(limit);
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}

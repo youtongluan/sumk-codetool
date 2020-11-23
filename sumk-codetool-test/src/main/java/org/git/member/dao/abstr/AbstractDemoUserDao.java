@@ -32,8 +32,7 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 
 	public List<DemoUser> list(DemoUser demoUser,int offset,int limit){
 		return DB.select(demoUser).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit).queryList();
+				.offset(offset).limit(limit).orderByDesc("id").queryList();
 	}
 	
 	public long count(DemoUser demoUser){
@@ -46,8 +45,7 @@ public abstract class AbstractDemoUserDao extends AbstractCachable implements De
 	
 	public CountedResult<DemoUser> listAndCount(DemoUser obj,int offset,int limit){
 		Select select = DB.select(obj).tableClass(DemoUser.class).fromCache(this.isCacheEnable())
-				.offset(offset)
-				.limit(limit);
+				.offset(offset).limit(limit).orderByDesc("id");
 		
 		return new CountedResult<>(select.queryList(),select.count());
 	}
