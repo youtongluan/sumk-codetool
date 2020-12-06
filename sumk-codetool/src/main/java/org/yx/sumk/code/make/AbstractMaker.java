@@ -16,6 +16,7 @@
 package org.yx.sumk.code.make;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.Map;
 import org.yx.db.sql.ColumnMeta;
 import org.yx.db.sql.PojoMeta;
 import org.yx.db.sql.PojoMetaHolder;
+import org.yx.exception.SumkException;
 import org.yx.log.Log;
 import org.yx.sumk.code.Infos.IdInfo;
 import org.yx.sumk.code.Infos.SimpleTableInfo;
@@ -37,6 +39,11 @@ public abstract class AbstractMaker extends BaseMaker {
 
 	public AbstractMaker(List<Class<?>> clzs) {
 		this.clzs = clzs;
+		try {
+			ConfigHolder.putTemplate(this.ftlName());
+		} catch (IOException e) {
+			throw new SumkException(23234234,e.getMessage(), e);
+		}
 	}
 
 	/*
@@ -86,6 +93,8 @@ public abstract class AbstractMaker extends BaseMaker {
 			String minrest1 = clz.getSimpleName().substring(1, clz.getSimpleName().length());
 			String minnewStr1 = new StringBuffer(minfirst1).append(minrest1).toString();
 			tb.setMinclassname(minnewStr1);
+			
+			pm.fieldMetas().forEach(m->tb.getCols().add(m.getFieldName()));
 			try {
 				this.output(tb);
 				Log.get(this.getClass()).info(tb.getClassName() + "已经生成了");
@@ -111,6 +120,7 @@ public abstract class AbstractMaker extends BaseMaker {
 			root.put("getid", tb.getIdInfos().get(0).getGetid());
 		}
 
+		root.put("cols", tb.getCols());
 		root.put("classname", tb.getMinclassname());
 		root.put("module", tb.getPackageName().substring(0, tb.getPackageName().lastIndexOf(".")));
 		Path path = Paths.get(baseDir, this.outputPath(), this.outputFileName(tb));

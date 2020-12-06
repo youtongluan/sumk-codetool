@@ -9,6 +9,7 @@ import org.yx.exception.SumkException;
 import org.yx.main.SumkServer;
 import org.yx.sumk.code.make.AbstrDaoMaker;
 import org.yx.sumk.code.make.BaseMaker;
+import org.yx.sumk.code.make.ConstMaker;
 import org.yx.sumk.code.make.DaoImplMaker;
 import org.yx.sumk.code.make.DaoMaker;
 
@@ -23,6 +24,7 @@ public class CodeTool {
 		new AbstrDaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 		new DaoImplMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 		new DaoMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
+		new ConstMaker(Arrays.asList(clzs)).exec(deleteBeforGenerate);
 	}
 	
 	public static void generateAbstrctDao(boolean deleteBeforGenerate,Class<?>... clzs) {

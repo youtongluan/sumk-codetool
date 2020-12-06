@@ -1,10 +1,12 @@
 package org.yx.sumk.code.Infos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleTableInfo extends TableInfo {
 	private String minclassname = "";
 	private List<IdInfo> idInfos = null;
+	private List<String> cols=new ArrayList<>();
 
 	public String getMinclassname() {
 		return minclassname;
@@ -26,4 +28,12 @@ public class SimpleTableInfo extends TableInfo {
 		this.idInfos = idInfos;
 	}
 
+	public List<String> getCols() {
+		return cols;
+	}
+
+	public void setCols(List<String> cols) {
+		this.cols = cols;
+	}
+	
 }
