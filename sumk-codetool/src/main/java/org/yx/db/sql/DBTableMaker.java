@@ -15,6 +15,8 @@
  */
 package org.yx.db.sql;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +29,7 @@ import java.util.Set;
 import org.yx.common.ItemJoiner;
 import org.yx.conf.AppInfo;
 import org.yx.db.DB;
-import org.yx.db.exec.Databases;
+import org.yx.db.exec.DBSources;
 import org.yx.db.mapper.RawExecutor;
 import org.yx.exception.SumkException;
 import org.yx.log.Log;
@@ -121,7 +123,7 @@ public class DBTableMaker {
 			Log.get("sumk.code.generator").info("没有配置数据库，不会自动写入数据库。自此sql生成结束");
 			return;
 		}
-		DB.execute(Databases.any(), ds -> {
+		DB.execute(DBSources.any(), ds -> {
 			createTable(sql, pm.getTableName());
 			return null;
 		});
@@ -154,14 +156,14 @@ public class DBTableMaker {
 		if (clz == Integer.class || clz == int.class) {
 			return AppInfo.get("sumk.code.generator.type.int", "INT");
 		}
-		if (clz == Long.class || clz == long.class) {
+		if (clz == Long.class || clz == long.class || clz==BigInteger.class) {
 			return AppInfo.get("sumk.code.generator.type.long", "BIGINT");
 		}
 
 		if (clz == Float.class || clz == float.class) {
 			return AppInfo.get("sumk.code.generator.type.float", "DECIMAL(12,3)");
 		}
-		if (clz == Double.class || clz == double.class) {
+		if (clz == Double.class || clz == double.class || clz==BigDecimal.class) {
 			return AppInfo.get("sumk.code.generator.type.double", "DECIMAL(20,5)");
 		}
 
