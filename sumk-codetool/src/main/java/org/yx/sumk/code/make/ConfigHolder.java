@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.yx.log.Log;
-import org.yx.util.StreamUtil;
+import org.yx.util.IOUtil;
 
 import freemarker.cache.ByteArrayTemplateLoader;
 import freemarker.template.Configuration;
@@ -26,7 +26,7 @@ public class ConfigHolder {
 			Log.get("sumk.config").error("模板" + name + "找不到");
 			System.exit(-1);
 		}
-		byte[] bs = StreamUtil.readAllBytes(in, true);
+		byte[] bs = IOUtil.readAllBytes(in, true);
 		ByteArrayTemplateLoader.class.cast(cfg.getTemplateLoader()).putTemplate(name, bs);
 	}
 }

@@ -2,10 +2,10 @@ package org.yx.sumk.code;
 
 import java.util.Arrays;
 
-import org.yx.common.StartConstants;
 import org.yx.conf.AppInfo;
 import org.yx.db.sql.DBTableMaker;
 import org.yx.exception.SumkException;
+import org.yx.main.StartConstants;
 import org.yx.main.SumkServer;
 import org.yx.sumk.code.make.AbstrDaoMaker;
 import org.yx.sumk.code.make.BaseMaker;
