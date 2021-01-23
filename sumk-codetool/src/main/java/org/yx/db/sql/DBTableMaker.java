@@ -75,7 +75,7 @@ public class DBTableMaker {
 			}
 		}
 		if (pm.isSoftDelete() && !columnNames.contains(pm.softDelete.columnName)) {
-			Class<?> softType = pm.softDelete.columnType;
+			Class<?> softType = pm.softDelete.validValue.getClass();
 			String valid = Boolean.class == softType ? "1" : String.valueOf(pm.softDelete.validValue);
 			String invalid = Boolean.class == softType ? "0" : String.valueOf(pm.softDelete.inValidValue);
 			String comment = valid + "表示有效记录，" + invalid + "表示记录已被删除";
