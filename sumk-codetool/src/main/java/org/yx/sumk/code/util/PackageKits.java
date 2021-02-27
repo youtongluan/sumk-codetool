@@ -15,8 +15,8 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PackageUtil {
-	private static final Logger log = LoggerFactory.getLogger(PackageUtil.class.getName());
+public class PackageKits {
+	private static final Logger log = LoggerFactory.getLogger(PackageKits.class.getName());
 
 	/*
 	 * 取得某一类所在包的所有类名 不含迭代

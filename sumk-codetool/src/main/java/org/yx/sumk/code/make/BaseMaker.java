@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.yx.conf.AppInfo;
 import org.yx.log.Log;
-import org.yx.sumk.code.util.FileUtil;
+import org.yx.sumk.code.util.FileKits;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -24,13 +24,13 @@ public abstract class BaseMaker {
 	public BaseMaker() {
 		this.cfg = ConfigHolder.getConfiguration();
 		this.destDir = new File(baseDir);
-		FileUtil.checkDir(this.destDir);
+		FileKits.checkDir(this.destDir);
 		Log.get("sumk.code").info("代码生成的路径：{}",this.destDir);
 	}
 
 	protected void outPut(String src, File dest, Map<String, Object> root) throws IOException, TemplateException {
 		Template temp = cfg.getTemplate(src);
-		FileUtil.checkNewFile(dest);
+		FileKits.checkNewFile(dest);
 		Writer out = new OutputStreamWriter(new FileOutputStream(dest), "UTF-8");
 		temp.process(root, out);
 		out.flush();

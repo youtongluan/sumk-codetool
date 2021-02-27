@@ -3,7 +3,7 @@ package org.yx.sumk.code.util;
 import java.io.File;
 import java.io.IOException;
 
-public class FileUtil {
+public class FileKits {
 	public static void checkNewFile(File file) throws IOException {
 		if (!file.exists()) {
 			if (file.getName().indexOf(".") > 0) {

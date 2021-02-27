@@ -15,6 +15,7 @@ public class Multikey{
 	@Column(type=ColumnType.ID_BOTH)
 	private String id2;
 
+	@Comment("姓名")
 	private String name;
 
 	private Integer age;

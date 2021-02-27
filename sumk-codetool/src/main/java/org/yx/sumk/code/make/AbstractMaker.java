@@ -31,8 +31,8 @@ import org.yx.exception.SumkException;
 import org.yx.log.Log;
 import org.yx.sumk.code.Infos.IdInfo;
 import org.yx.sumk.code.Infos.SimpleTableInfo;
-import org.yx.sumk.code.util.FileUtil;
-import org.yx.sumk.code.util.StringUtils;
+import org.yx.sumk.code.util.FileKits;
+import org.yx.sumk.code.util.StringKits;
 
 public abstract class AbstractMaker extends BaseMaker {
 	protected List<Class<?>> clzs = new ArrayList<>();
@@ -62,7 +62,7 @@ public abstract class AbstractMaker extends BaseMaker {
 	@Override
 	public void exec(boolean needClear) {
 		if(needClear){
-			FileUtil.clearDir(new File(baseDir, outputPath()));// 清空文件
+			FileKits.clearDir(new File(baseDir, outputPath()));// 清空文件
 		}
 		for (Class<?> clz : clzs) {
 			PojoMeta pm = PojoMetaHolder.getPojoMeta(clz);
@@ -79,11 +79,12 @@ public abstract class AbstractMaker extends BaseMaker {
 			// continue;
 			// }
 			List<IdInfo> idInfos = new ArrayList<IdInfo>();
+			Map<String,String> comments=new HashMap<>();
 			for (ColumnMeta cm : ids) {
 				IdInfo idinfo = new IdInfo();
 				idinfo.setId(cm.getFieldName());
 				idinfo.parseType(cm.getField().getType());
-				String newStr = StringUtils.capFirst(cm.getField().getName());
+				String newStr = StringKits.capFirst(cm.getField().getName());
 				idinfo.setSetid("set" + newStr);
 				idinfo.setGetid("get" + newStr);
 				idInfos.add(idinfo);
@@ -93,8 +94,11 @@ public abstract class AbstractMaker extends BaseMaker {
 			String minrest1 = clz.getSimpleName().substring(1, clz.getSimpleName().length());
 			String minnewStr1 = new StringBuffer(minfirst1).append(minrest1).toString();
 			tb.setMinclassname(minnewStr1);
-			
-			pm.fieldMetas().forEach(m->tb.getCols().add(m.getFieldName()));
+			tb.setFieldComments(comments);
+			pm.fieldMetas().forEach(m->{
+				tb.getCols().add(m.getFieldName());
+				comments.put(m.getFieldName(), m.getComment());
+			});
 			try {
 				this.output(tb);
 				Log.get(this.getClass()).info(tb.getClassName() + "已经生成了");
@@ -123,6 +127,7 @@ public abstract class AbstractMaker extends BaseMaker {
 		root.put("cols", tb.getCols());
 		root.put("classname", tb.getMinclassname());
 		root.put("module", tb.getPackageName().substring(0, tb.getPackageName().lastIndexOf(".")));
+		root.put("comments", tb.getFieldComments());
 		Path path = Paths.get(baseDir, this.outputPath(), this.outputFileName(tb));
 		this.outPut(ftlName(), path.toFile(), root);
 	}

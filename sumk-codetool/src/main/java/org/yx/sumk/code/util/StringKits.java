@@ -1,6 +1,6 @@
 package org.yx.sumk.code.util;
 
-public class StringUtils {
+public class StringKits {
 
 	/*
 	 * 首字母大写
